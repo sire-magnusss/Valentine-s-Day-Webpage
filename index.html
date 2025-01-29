@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Valentine's Page - Ribbon Gift Wrap</title>
+
+    <!-- A modern, clean font (e.g. Montserrat) -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+    </style>
+
+    <style>
+
+        /* Funny "shake" animation for the NO button */
+        .shake {
+            animation: shakeAnim 0.5s ease-in-out 3; /* 3 shakes, half-second each */
+        }
+        @keyframes shakeAnim {
+            0%   { transform: translateX(0); }
+            20%  { transform: translateX(-5px); }
+            40%  { transform: translateX(5px); }
+            60%  { transform: translateX(-5px); }
+            80%  { transform: translateX(5px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* MODAL POPUP OVERLAY */
+        .custom-popup {
+            display: none; /* hidden by default */
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5); /* translucent black overlay */
+            align-items: center; /* center the popup content */
+            justify-content: center;
+            z-index: 9999; /* above everything else */
+        }
+        /* The popup content box */
+        .popup-content {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            animation: scaleIn 0.4s ease; /* a small pop-in effect */
+        }
+        @keyframes scaleIn {
+            0%   { transform: scale(0.7); opacity: 0; }
+            100% { transform: scale(1);   opacity: 1; }
+        }
+        /* The close button in the popup */
+        .popup-content button {
+            background: #ff7373;
+            border: none;
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+        .popup-content button:hover {
+            background: #ff4f4f;
+        }
+
+        /****************************************************
+          BASE + LAYOUT
+        ****************************************************/
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* TEAL background restored! */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #4B7B7A;
+            /* The scissor cursor (base64). Feel free to replace with your own. */
+            cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAARCAYAAADzoH0MAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAARFwAAERcBbzMj1gAAABl0RVh0Q3JlYXRvcgB3aW5zb21lIDMuNS4xNPM7pQAAABV0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAACeSURBVDiN7ZQxDsIwEEQbXOXZbWOg12KCR7yExxGoMwK5pYAk+CDuBGTNSq3ds1bxEJ74fy9KM7IU3f5gF+b8bod8C0VScZaYYRsN9EPIfwXkY2i5DDP5a1dggri0yFJCTUCkG19XMPZxi8ubDr2h5tBElS3u8QmEiGIh8X0fp4OH5C22CKcWgHF3zvtyMBg1I/vXfALgWTei1f8P6AAAAAElFTkSuQmCC") 8 8, auto;
+            min-height: 100vh; /* so it fills the screen vertically */
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* When the page is wrapped, we blur the main content behind it. */
+        body.blurred #mainContent {
+            filter: blur(5px);
+        }
+
+        .landing-page {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+            background-color: #ff8fb1; /* teal card inside */
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            min-height: 600px;
+        }
+
+        .header-title {
+            text-align: center;
+            font-size: 1.4rem;
+            color: #fff;
+            padding: 16px 0;
+            font-weight: 700;
+        }
+
+        /* NAV */
+        .nav {
+            background-color: #FFF0FA;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 2rem;
+        }
+        .nav-left, .nav-right {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            font-weight: bold;
+        }
+        .nav-center {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-center a {
+            color: #ff8fb1;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .nav-center a:hover {
+            color: #ffdce5;
+        }
+        .hamburger {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            position: relative;
+            margin-right: 10px;
+        }
+        .hamburger::before,
+        .hamburger::after {
+            content: "";
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            position: absolute;
+            left: 0;
+        }
+        .hamburger::before { top: -8px; }
+        .hamburger::after  { top: 8px; }
+
+        .search-icon {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            position: relative;
+        }
+        .search-icon::after {
+            content: "";
+            width: 2px;
+            height: 10px;
+            background-color: #fff;
+            position: absolute;
+            right: -3px;
+            top: 10px;
+            transform: rotate(45deg);
+            transform-origin: center;
+        }
+
+        /* CONTENT */
+        .content {
+            display: flex;
+            justify-content: space-between;
+            padding: 2rem;
+            min-height: 400px;
+            position: relative;
+        }
+        .left-column {
+            width: 50%;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-right: 2rem;
+        }
+        .valentine-heading {
+            text-align: left;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            line-height: 1.2;
+        }
+        .valentine-heading .lines {
+            display: block;
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+            font-weight: 400;
+        }
+        .valentine-heading .line-decor {
+            display: inline-block;
+            width: 40px;
+            height: 2px;
+            background: #fff;
+            vertical-align: middle;
+            margin: 0 5px;
+        }
+        .left-column p {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            color: #eaeaea;
+        }
+        .buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        .btn {
+            background-color: #fff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s, color 0.3s;
+            font-weight: 600;
+        }
+        .btn:hover {
+            background-color: #e2e2e2;
+        }
+
+        .right-column {
+            width: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Dots at bottom left */
+        .dots {
+            /* (Unreferenced in your code but left as is) */
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            gap: 8px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .dot.active {
+            background-color: #fff;
+        }
+
+        /* Placeholder for a GIF in the right column */
+        .gif-placeholder {
+            border: 2px dashed #fff;
+            width: 300px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gif-placeholder img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+
+        /****************************************************
+          RIBBON OVERLAY (gift-wrap style)
+        ****************************************************/
+        .ribbon-overlay {
+            position: fixed; /* cover entire screen */
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); /* dark overlay behind the ribbons */
+            z-index: 9999;
+            /* We'll place a big cross of ribbons + a bow in the center */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Container to hold both ribbons + bow */
+        .ribbon-wrap {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Horizontal + Vertical ribbons (cover entire screen) */
+        .ribbon-horizontal, .ribbon-vertical {
+            position: absolute;
+            background: red;
+            transition: transform 1s ease-in-out;
+            transform-origin: center;
+        }
+        .ribbon-horizontal {
+            width: 100%;
+            height: 60px;
+            top: 50%;
+            left: 0;
+            margin-top: -30px; /* center it vertically */
+        }
+        .ribbon-vertical {
+            width: 60px;
+            height: 100%;
+            left: 50%;
+            top: 0;
+            margin-left: -30px; /* center it horizontally */
+        }
+        /* A bow in the center, clickable to "unwrap" */
+        .bow {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: #f33;
+            border-radius: 50%;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 0 4px #d22 inset; /* a simple ring inside */
+            cursor: inherit; /* keep scissor cursor */
+            transition: transform 0.6s ease-in-out;
+        }
+        /* When we click, we add .unwrapped => animate ribbons out. */
+        .unwrapped .ribbon-horizontal {
+            transform: translateY(-100vh); /* slide off top */
+        }
+        .unwrapped .ribbon-vertical {
+            transform: translateX(-100vw); /* slide left (or could do right) */
+        }
+        .unwrapped .bow {
+            transform: translate(-50%, -50%) scale(0);
+        }
+        /* Then fade out the entire overlay after ribbons move away. */
+        .overlay-fade {
+            animation: fadeOverlay 0.8s forwards ease-in-out 1s; /* start fade after .unwrapped */
+        }
+        @keyframes fadeOverlay {
+            to { opacity: 0; visibility: hidden; }
+        }
+
+        /****************************************************
+          FULLSCREEN LOADING GIF when YES is clicked
+        ****************************************************/
+        .loading-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999; /* above everything */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s; /* faster fade-in so it doesn't mismatch the GIF frames */
+        }
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* Make the GIF fill the entire screen */
+        .loading-overlay img {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+        }
+
+        /****************************************************
+          FLOATING HEARTS (ADDED, TWEAKED TO RISE FROM BOTTOM)
+        ****************************************************/
+        .floating-hearts {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* let clicks go through */
+            overflow: hidden;
+            z-index: 1000; /* behind the ribbon overlay (9999), but above main content */
+        }
+        .floating-hearts .heart {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: pink;
+            transform: rotate(-45deg); /* keep the heart shape angled */
+            border-radius: 10%;
+            bottom: 0; /* start at bottom */
+            animation: floatUp 5s linear infinite;
+            opacity: 0.8;
+        }
+        .floating-hearts .heart::before,
+        .floating-hearts .heart::after {
+            content: "";
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: inherit;
+            border-radius: 50%;
+        }
+        .floating-hearts .heart::before {
+            top: -12px;
+            left: 0;
+        }
+        .floating-hearts .heart::after {
+            top: 0;
+            left: 12px;
+        }
+        @keyframes floatUp {
+            0% {
+                bottom: 0;
+                opacity: 0.8;
+            }
+            100% {
+                bottom: 110%;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="blurred">
+
+<!-- RIBBON OVERLAY (initial gift-wrapping) -->
+<div class="ribbon-overlay" id="ribbonOverlay">
+    <div class="ribbon-wrap" id="ribbonWrap">
+        <!-- Horizontal + Vertical strips -->
+        <div class="ribbon-horizontal"></div>
+        <div class="ribbon-vertical"></div>
+        <!-- Bow in the center -->
+        <div class="bow" id="bow"></div>
+    </div>
+</div>
+
+<!-- FULLSCREEN LOADING GIF (after YES click) -->
+<div class="loading-overlay" id="loadingOverlay">
+    <!-- This GIF will fill the entire screen -->
+    <img src="images/heart loading thing.gif" alt="Loading GIF" />
+</div>
+
+<div id="mainContent">
+    <div class="landing-page">
+        <div class="header-title">-----FOR THE 14th OF FEBRUARY-----</div>
+
+        <!-- NAV -->
+        <nav class="nav">
+            <div class="nav-left"></div>
+            <div class="nav-center">
+                <a href="#">Home</a>
+                <a href="pictures.html">Our Pictures</a>
+                <a href="info.html">Info</a>
+            </div>
+            <div class="nav-right">
+                <div class="search-icon"></div>
+            </div>
+        </nav>
+
+        <!-- CONTENT -->
+        <div class="content">
+            <!-- LEFT COLUMN -->
+            <div class="left-column">
+                <div class="valentine-heading">
+                    <div>
+                        <span class="line-decor"></span>
+                        HAPPY
+                        VALENTINE'S
+                        <span class="line-decor"></span>
+                    </div>
+                    <div class="lines">DAY(IN ADVANCE)</div>
+                </div>
+                <p>
+                    MY HEART AND MY CALENDAR UNANIMOUSLY AGREE: THERE’S ONLY ONE PERSON I WANT TO SEE ON VALENTINE’S DAY, AND IT’S YOUUUUUUUUU!!!! FANCY BEING MY DATE??? PLEASEEE???( ˘ ³˘)♥︎
+                </p>
+                <div class="buttons">
+                    <button class="btn" id="yesBtn">YES</button>
+                    <button class="btn" id="noBtn">NO</button>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN => placeholder for a GIF -->
+            <div class="right-column">
+                <div class="gif-placeholder">
+                    <!-- Put your own "balloons or clouds" GIF or image here -->
+                    <img src="images/heart movingggg.gif" alt="Placeholder GIF" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The floating hearts container -->
+<div class="floating-hearts" id="floatingHearts">
+    <!-- Each heart has a left position & optional animation-delay for variety. -->
+    <div class="heart" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="heart" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="heart" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="heart" style="left: 90%; animation-delay: 6s;"></div>
+    <div class="heart" style="left: 45%; animation-delay: 2.5s;"></div>
+    <div class="heart" style="left: 20%; animation-delay: 3s;"></div>
+    <div class="heart" style="left: 30%; animation-delay: 1s;"></div>
+    <div class="heart" style="left: 50%; animation-delay: 2s;"></div>
+    <div class="heart" style="left: 70%; animation-delay: 0.5s;"></div>
+    <div class="heart" style="left: 85%; animation-delay: 1.5s;"></div>
+</div>
+
+<!-- CUSTOM POPUP for NO click -->
+<div class="custom-popup" id="customPopup">
+    <div class="popup-content">
+        <h2>Oh no! It's a NO. :(</h2>
+        <p>Wait... Did you really just say NO?</p>
+        <p>Are you sure that's a good idea?</p>
+        <button id="closePopupBtn">I'LL BE BETTER</button>
+    </div>
+</div>
+
+<script>
+    const ribbonOverlay = document.getElementById('ribbonOverlay');
+    const ribbonWrap = document.getElementById('ribbonWrap');
+    const bow = document.getElementById('bow');
+    const mainContent = document.getElementById('mainContent');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+
+    // 1) "Click the bow" => Unwrap animation
+    bow.addEventListener('click', () => {
+        // Animate the ribbons off-screen
+        ribbonWrap.classList.add('unwrapped');
+        // Fade out the overlay
+        ribbonOverlay.classList.add('overlay-fade');
+        // Also remove the blur from the page behind
+        document.body.classList.remove('blurred');
+    });
+
+    // 2) YES => Show fullscreen GIF quickly, then go to second page
+    yesBtn.addEventListener('click', () => {
+        // Show the loading overlay
+        loadingOverlay.classList.add('active');
+        // After ~1 second, navigate to love.html
+        setTimeout(() => {
+            window.location.href = "love.html";
+        }, 800);
+    });
+
+    // 3) NO => show our funny custom popup + shake the button
+    const customPopup = document.getElementById('customPopup');
+    const closePopupBtn = document.getElementById('closePopupBtn');
+
+    noBtn.addEventListener('click', () => {
+        // Trigger the shake animation
+        noBtn.classList.add('shake');
+        // Remove the shake class after 1.5 seconds
+        setTimeout(() => {
+            noBtn.classList.remove('shake');
+        }, 1500);
+
+        // Show our custom popup
+        customPopup.style.display = 'flex';
+    });
+
+    // Close the popup when "I'LL BE BETTER" is clicked
+    closePopupBtn.addEventListener('click', () => {
+        customPopup.style.display = 'none';
+    });
+</script>
+</body>
+</html>

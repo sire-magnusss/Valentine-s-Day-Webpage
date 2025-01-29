@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>My Love Page</title>
+    <!-- Montserrat again -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+    </style>
+
+    <style>
+        /**************************************************
+         * BASE STYLES (Your original code)
+        **************************************************/
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            /* Original background was #FBD6EB. We'll override it
+               with an animated gradient in the "ADDED" section below. */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+            position: relative; /* to hold confetti & sparkles */
+            overflow: hidden;   /* so confetti isn't cut off */
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #c92a7f;
+            margin-bottom: 20px;
+            z-index: 10; /* above confetti */
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #333;
+            max-width: 600px;
+            line-height: 1.5;
+            margin: 0 auto;
+            z-index: 10; /* above confetti */
+        }
+
+        /**************************************************
+         * ADDED: Animated Gradient Background
+        **************************************************/
+        body {
+            /* We'll animate a subtle gradient across pink/purple tones */
+            background: linear-gradient(45deg, #FBD6EB, #FCE0F1, #FBD6EB);
+            background-size: 300% 300%;
+            animation: gradientShift 15s ease infinite;
+        }
+        @keyframes gradientShift {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /**************************************************
+         * ADDED: Confetti falling from top
+        **************************************************/
+        .confetti {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* clicks pass through */
+            z-index: 5; /* behind the text, above the background */
+            overflow: hidden;
+        }
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f78fb3; /* default color, overwritten inline */
+            animation: confettiFall linear infinite;
+        }
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100%) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /**************************************************
+         * REMOVED: Big Heart + Heartbeat Animation
+         * (No longer needed, replaced by gif placeholder)
+        **************************************************/
+
+        /**************************************************
+         * ADDED: Sparkles around center
+        **************************************************/
+        .sparkles {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9; /* behind text but above confetti */
+        }
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #fff;
+            opacity: 0;
+            animation: sparkle 1.5s infinite;
+        }
+        @keyframes sparkle {
+            0%   { transform: scale(0);   opacity: 0; }
+            30%  { transform: scale(1.2); opacity: 1; }
+            70%  { transform: scale(1);   opacity: 0.8; }
+            100% { transform: scale(0);   opacity: 0; }
+        }
+
+        /**************************************************
+         * NEW: Placeholder in center for your GIF
+        **************************************************/
+        .gif-placeholder {
+            width: 200px;
+            height: 200px;
+            background: #FFF0FA; /* subtle pink background or any color you like */
+            border: 2px dashed #ff8fb1;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10; /* above confetti */
+            margin-bottom: 20px;
+        }
+        .gif-placeholder img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+<h1>はいと言ってくれてありがとう!!!</h1>
+
+<!-- NEW: GIF placeholder instead of the big heart -->
+<div class="gif-placeholder">
+    <img src="images/Hello Kitty Lean GIF - Hello Kitty Lean Love - Discover & Share GIFs.gif" alt="My GIF" />
+</div>
+
+<p>
+    正直に言うと、あなたはノーと言うだろうと思っていました、ふふ、このページをスクリーンショットして私に送ってください。そうすればあなたの答えはわかります!!!
+</p>
+
+<!-- Confetti Container (unchanged) -->
+<div class="confetti" id="confettiContainer"></div>
+
+<!-- Sparkles (unchanged) -->
+<div class="sparkles">
+    <!-- Same sparkle offsets/timings as before -->
+    <div class="sparkle" style="top: -30px; left: 50px; animation-delay: 0s;"></div>
+    <div class="sparkle" style="top: 0px; left: 100px; animation-delay: 0.3s;"></div>
+    <div class="sparkle" style="top: 50px; left: 130px; animation-delay: 0.6s;"></div>
+    <div class="sparkle" style="top: 70px; left: 20px; animation-delay: 0.9s;"></div>
+    <div class="sparkle" style="top: -40px; left: 120px; animation-delay: 1s;"></div>
+    <div class="sparkle" style="top: 100px; left: 80px; animation-delay: 1.2s;"></div>
+</div>
+
+<script>
+    /***************************************************************
+     * SCRIPT: Generate multiple confetti pieces at random positions
+     ***************************************************************/
+    const confettiContainer = document.getElementById('confettiContainer');
+    const confettiCount = 30; // how many pieces to generate
+
+    for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti-piece';
+        // random horizontal start (0 to 100%)
+        confetti.style.left = Math.random() * 100 + '%';
+        // random size & color
+        const size = Math.floor(Math.random() * 6) + 8; // 8-13px
+        confetti.style.width = size + 'px';
+        confetti.style.height = size + 'px';
+        // pastel-ish random color
+        const hue = Math.floor(Math.random() * 360);
+        confetti.style.backgroundColor = `hsl(${hue}, 70%, 80%)`;
+        // random duration 3-6s
+        const duration = Math.random() * 3 + 3;
+        confetti.style.animationDuration = duration + 's';
+        // random delay
+        const delay = Math.random() * 2;
+        confetti.style.animationDelay = delay + 's';
+
+        confettiContainer.appendChild(confetti);
+    }
+</script>
+</body>
+</html>

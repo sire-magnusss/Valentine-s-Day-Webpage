@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Our Info Page</title>
+    <!-- Montserrat Font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+    </style>
+    <style>
+        /* Basic Reset & Font */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #FFD6EA, #FFE3F1, #FFD6EA);
+            background-size: 200% 200%;
+            animation: bgAnimation 15s ease infinite;
+            min-height: 100vh;
+            color: #333;
+            padding: 2rem;
+        }
+        @keyframes bgAnimation {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1, h2, h3, p {
+            margin-bottom: 1rem;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.6);
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            padding: 2rem;
+            position: relative;
+        }
+
+        /* A fun heart divider: we can reuse it between sections */
+        .heart-divider {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .heart-divider::before,
+        .heart-divider::after {
+            content: "";
+            display: inline-block;
+            width: 60px;
+            height: 2px;
+            background: #f196c3;
+            vertical-align: middle;
+            margin: 0 10px;
+        }
+        .heart-divider span {
+            color: #f196c3;
+            font-size: 1.5rem;
+        }
+
+        /* Section styling */
+        section {
+            margin-bottom: 2rem;
+        }
+        section h2 {
+            font-size: 1.8rem;
+            color: #c92a7f;
+            margin-bottom: 0.5rem;
+        }
+        section p {
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        /* GIF placeholders */
+        .gif-box {
+            width: 100%;
+            max-width: 400px;
+            height: 200px;
+            margin: 1rem auto;
+            border: 2px dashed #f196c3;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .gif-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+
+        /* A subtle floating hearts overlay (optional, just for cuteness) */
+        .floating-heart {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: #ffc2da;
+            transform: rotate(-45deg);
+            border-radius: 10%;
+            animation: floatUp 8s linear infinite;
+            opacity: 0.7;
+        }
+        .floating-heart::before,
+        .floating-heart::after {
+            content: "";
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: inherit;
+            border-radius: 50%;
+        }
+        .floating-heart::before {
+            top: -12px; left: 0;
+        }
+        .floating-heart::after {
+            top: 0; left: 12px;
+        }
+        @keyframes floatUp {
+            0%   { transform: translateY(0) rotate(-45deg); opacity: 0.7; }
+            100% { transform: translateY(-800px) rotate(-45deg); opacity: 0; }
+        }
+
+        /* Position them randomly via inline style in HTML */
+
+    </style>
+</head>
+<body>
+
+<!-- We can add some floating hearts for extra flair -->
+<div class="floating-heart" style="left: 10%; bottom: 0; animation-delay: 0s;"></div>
+<div class="floating-heart" style="left: 70%; bottom: -100px; animation-delay: 2s;"></div>
+<div class="floating-heart" style="left: 30%; bottom: -200px; animation-delay: 4s;"></div>
+<div class="floating-heart" style="left: 50%; bottom: -300px; animation-delay: 1s;"></div>
+
+<div class="container">
+    <h1 style="text-align:center; color: #c92a7f; margin-bottom:1.5rem;">
+        Our Story & Info
+    </h1>
+    <div class="heart-divider">
+        <span>♥</span>
+    </div>
+
+    <!-- Section 1: How It All Started -->
+    <section>
+        <h2>How It All Started</h2>
+        <p>
+            Write about how you first met, your initial impressions, and any special
+            memories from the early days. Let your girlfriend know how meaningful
+            those first moments were to you.
+
+        </p>
+
+        <!-- A placeholder for a sweet or funny GIF -->
+        <div class="gif-box">
+            <!-- Insert your actual GIF below, for example:
+                 <img src="images/how-we-met.gif" alt="GIF about how we met" />
+            -->
+            <p>GIF Placeholder</p>
+        </div>
+    </section>
+
+    <div class="heart-divider">
+        <span>♥</span>
+    </div>
+
+    <!-- Section 2: Things I Love About You -->
+    <section>
+        <h2>Things I Love About You</h2>
+        <p>
+            Highlight the qualities you adore. Maybe mention her sense of humor, her
+            kindness, or the way she smiles at you. Don’t hold back—this is the place
+            to share the little things that make her unique.
+        </p>
+        <p>
+            Add sweet or funny memories here. For example: “Remember that time we
+            danced in the rain and couldn’t stop laughing?”
+        </p>
+
+        <div class="gif-box">
+            <!-- Another spot for a relevant or adorable GIF -->
+            <p>GIF Placeholder</p>
+        </div>
+    </section>
+
+    <div class="heart-divider">
+        <span>♥</span>
+    </div>
+
+    <!-- Section 3: Our Future -->
+    <section>
+        <h2>Looking Ahead</h2>
+        <p>
+            Share your hopes or dreams for what’s coming next. Where do you see your
+            relationship heading? Any exciting plans, trips, or experiences you’d love
+            to have together?
+        </p>
+        <p>
+            You can mention big goals or little everyday routines—anything that shows
+            you’re excited to keep growing closer.
+        </p>
+    </section>
+
+    <div class="heart-divider">
+        <span>♥</span>
+    </div>
+
+    <!-- Section 4: Final Words -->
+    <section>
+        <h2>Final Words</h2>
+        <p>
+            Wrap it up with a heartfelt message—let her know how special she is, and
+            how grateful you are to have her. Maybe a short quote or a promise for the
+            future.
+        </p>
+        <p>
+            Something sweet like: "Thank you for being the brightest part of my life.
+            I’m beyond lucky to have found you, and I can’t wait to see what our
+            future holds."
+        </p>
+    </section>
+</div>
+
+</body>
+</html>
